@@ -1,10 +1,7 @@
 package org.example.animalcare.entity.pet;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.example.animalcare.entity.user.UserGeneral;
 import org.example.animalcare.enums.PostType;
 
@@ -15,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class PetPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +26,8 @@ public class PetPost {
     private String color;
     private String healthCondition;
     private String location;
-    private String photoUrl;
+
+    private String photoPath;
 
     @ManyToOne
     private UserGeneral user;

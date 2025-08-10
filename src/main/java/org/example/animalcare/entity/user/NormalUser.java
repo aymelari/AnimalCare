@@ -9,9 +9,8 @@ import lombok.experimental.SuperBuilder;
 @DiscriminatorValue("NORMAL")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @SuperBuilder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class NormalUser extends UserGeneral {
 
 }

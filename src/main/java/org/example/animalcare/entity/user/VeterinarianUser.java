@@ -9,9 +9,8 @@ import lombok.experimental.SuperBuilder;
 @DiscriminatorValue("VETERINARIAN")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @SuperBuilder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class VeterinarianUser extends UserGeneral {
         private String pathToLicence;
         private int experience;

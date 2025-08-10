@@ -33,6 +33,7 @@ public abstract class UserGeneral {
     @Column(name = "user_type", insertable = false, updatable = false)
     @Enumerated(EnumType.STRING)
     private UserType userType;
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PetPost> petPosts = new HashSet<>();
 

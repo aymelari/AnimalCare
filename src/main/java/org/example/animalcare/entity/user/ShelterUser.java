@@ -11,9 +11,8 @@ import java.time.LocalDateTime;
 @DiscriminatorValue("SHELTER")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @SuperBuilder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ShelterUser extends UserGeneral {
     private String shelterAddress;
     private Long cardDetails;

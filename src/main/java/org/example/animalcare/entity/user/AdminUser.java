@@ -9,8 +9,7 @@ import lombok.experimental.SuperBuilder;
 @DiscriminatorValue("ADMIN")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @SuperBuilder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AdminUser extends UserGeneral {
 }

@@ -22,7 +22,7 @@ public class PostRequestDto {
     private String color;
     private String healthCondition;
     private String location;
-    private String photoUrl;
+    private String photoPath;
 
     private Long userId;
     private LocalDateTime createdAt;
