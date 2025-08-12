@@ -17,6 +17,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.example.animalcare.enums.UserType.NORMAL;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -27,11 +29,12 @@ public class UserService {
         UserGeneral user;
         switch(dto.getUserType()){
             case NORMAL -> user = NormalUser.builder()
+                    .userType(NORMAL)
                     .username(dto.getUsername())
                     .password(dto.getPassword())
                     .email(dto.getEmail())
                     .phone(dto.getPhone())
-                    .userType(UserType.NORMAL)
+
                     .build();
             case VETERINARIAN -> user= VeterinarianUser.builder()
                     .username(dto.getUsername())
@@ -39,9 +42,10 @@ public class UserService {
                     .email(dto.getEmail())
                     .phone(dto.getPhone())
                     .userType(UserType.VETERINARIAN)
-                    /*path logic */      .pathToLicence(dto.getPathToLicence())
+                  //  path logic
+                    .pathToLicence(dto.getPathToLicence())
                     .experience(dto.getExperience())
-                    .approved(dto.isApproved())
+                    .approved(dto.getApproved())
                     .build();
 
             case SHELTER -> user= ShelterUser.builder()
@@ -61,7 +65,6 @@ public class UserService {
                     .phone(dto.getPhone())
                     .userType(UserType.ADMIN)
                     .build();
-
             default -> throw new IllegalArgumentException("Unknown user type: " + dto.getUserType());
         }
         userRepository.save(user);
@@ -162,7 +165,7 @@ public class UserService {
                     VeterinarianUser veterinarianUser=  (VeterinarianUser) userGeneral;
                     veterinarianUser.setPathToLicence(dto.getPathToLicence());
                     veterinarianUser.setExperience(dto.getExperience());
-                    veterinarianUser.setApproved(dto.isApproved());
+                    veterinarianUser.setApproved(dto.getApproved());
                 }
                 case SHELTER -> {
                     ShelterUser shelterUser= (ShelterUser) userGeneral;

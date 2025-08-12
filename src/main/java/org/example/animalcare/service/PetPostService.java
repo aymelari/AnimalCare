@@ -69,21 +69,19 @@ public class PetPostService {
     {
         UserGeneral user = userRepository.findById(postRequestDto.getUserId()).orElseThrow(() -> new UserNotFoundException("User not found"));
         PetPost petPost = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException("Post not found"));
-        petPost= PetPost.builder()
-                .title(postRequestDto.getTitle())
-                .description(postRequestDto.getDescription())
-                .animalType(postRequestDto.getAnimalType())
-                .breed(postRequestDto.getBreed())
-                .gender(postRequestDto.getGender())
-                .age(postRequestDto.getAge())
-                .color(postRequestDto.getColor())
-                .healthCondition(postRequestDto.getHealthCondition())
-                .location(postRequestDto.getLocation())
-                .photoPath(postRequestDto.getPhotoPath())
-                .user(user)
-                .createdAt(postRequestDto.getCreatedAt())
-                .type(postRequestDto.getType())
-                .build();
+        petPost.setTitle(postRequestDto.getTitle());
+        petPost.setDescription(postRequestDto.getDescription());
+        petPost.setAnimalType(postRequestDto.getAnimalType());
+        petPost.setBreed(postRequestDto.getBreed());
+        petPost.setGender(postRequestDto.getGender());
+        petPost.setAge(postRequestDto.getAge());
+        petPost.setColor(postRequestDto.getColor());
+        petPost.setHealthCondition(postRequestDto.getHealthCondition());
+        petPost.setLocation(postRequestDto.getLocation());
+        petPost.setPhotoPath(postRequestDto.getPhotoPath());
+        petPost.setUser(user);
+        petPost.setCreatedAt(postRequestDto.getCreatedAt());
+        petPost.setType(postRequestDto.getType());
 
         postRepository.save(petPost);
         PostResponseDto postResponseDto = new PostResponseDto();

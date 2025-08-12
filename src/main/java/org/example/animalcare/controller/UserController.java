@@ -1,6 +1,5 @@
 package org.example.animalcare.controller;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.example.animalcare.dto.user.UserRequestDto;
 import org.example.animalcare.dto.user.UserResponseDto;
@@ -19,6 +18,7 @@ public class UserController {
 
     @PostMapping("/new")
     public ResponseEntity<Void> newUser(@RequestBody UserRequestDto user) {
+        System.out.println("DEBUG userType: " + user.getUserType());
         userService.createUser(user);
         return ResponseEntity.ok().build();
     }

@@ -27,7 +27,7 @@ public class PetPostController {
         return ResponseEntity.ok(petPostService.updatePost(postRequestDto,id));
     }
 
-    @GetMapping({"/id"})
+    @GetMapping({"/{id}"})
     public ResponseEntity<PostResponseDto> getPost(@PathVariable Long id) {
         return ResponseEntity.ok(petPostService.getPostById(id));
     }

@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Entity
 @DiscriminatorValue("SHELTER")
@@ -16,6 +17,6 @@ import java.time.LocalDateTime;
 public class ShelterUser extends UserGeneral {
     private String shelterAddress;
     private Long cardDetails;
-    private LocalDateTime createdAt;
+    private OffsetDateTime createdAt;
 
 }
