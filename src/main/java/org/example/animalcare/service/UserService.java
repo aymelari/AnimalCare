@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
 
-    public UserGeneral createUser(UserRequestDto dto)
+    public void createUser(UserRequestDto dto)
     {
         UserGeneral user;
         switch(dto.getUserType()){
@@ -64,8 +64,7 @@ public class UserService {
 
             default -> throw new IllegalArgumentException("Unknown user type: " + dto.getUserType());
         }
-
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
 
