@@ -10,7 +10,9 @@ import org.example.animalcare.exception.UserNotFoundException;
 import org.example.animalcare.repository.PostRepository;
 import org.example.animalcare.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,12 +21,26 @@ import java.util.Set;
 public class PetPostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final S3Service s3Service;
 
-    public PostResponseDto createPost(PostRequestDto postRequestDto)
-    {
+
+    public byte[] getPostImage(Long postId) {
+        PetPost petPost = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException("Post not found"));
+        return s3Service.downloadFileBytes(petPost.getPhotoPath());
+    }
+
+    public String uploadImage(MultipartFile file,Long postId) throws IOException {
+        PetPost petPost = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException("Post not found"));
+        String key = "user-images/" + postId + "/" + file.getOriginalFilename();
+        s3Service.uploadFile(key, file.getInputStream(), file.getContentType());
+        petPost.setPhotoPath(key);
+        postRepository.save(petPost);
+        return key;
+    }
+
+
+    public PostResponseDto createPost(PostRequestDto postRequestDto) throws IOException {
         UserGeneral user = userRepository.findById(postRequestDto.getUserId()).orElseThrow(() -> new UserNotFoundException("User not found"));
-
-
         PetPost petPost = new PetPost();
           petPost= PetPost.builder()
                   .title(postRequestDto.getTitle())
@@ -36,12 +52,10 @@ public class PetPostService {
                   .color(postRequestDto.getColor())
                   .healthCondition(postRequestDto.getHealthCondition())
                   .location(postRequestDto.getLocation())
-                  .photoPath(postRequestDto.getPhotoPath())
                   .user(user)
                   .createdAt(postRequestDto.getCreatedAt())
                   .type(postRequestDto.getType())
                   .build();
-
           postRepository.save(petPost);
 
           PostResponseDto postResponseDto = new PostResponseDto();
@@ -65,8 +79,7 @@ public class PetPostService {
 
     }
 
-    public PostResponseDto updatePost(PostRequestDto postRequestDto,Long postId)
-    {
+    public PostResponseDto updatePost(PostRequestDto postRequestDto,Long postId) throws IOException {
         UserGeneral user = userRepository.findById(postRequestDto.getUserId()).orElseThrow(() -> new UserNotFoundException("User not found"));
         PetPost petPost = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException("Post not found"));
         petPost.setTitle(postRequestDto.getTitle());
@@ -78,12 +91,12 @@ public class PetPostService {
         petPost.setColor(postRequestDto.getColor());
         petPost.setHealthCondition(postRequestDto.getHealthCondition());
         petPost.setLocation(postRequestDto.getLocation());
-        petPost.setPhotoPath(postRequestDto.getPhotoPath());
         petPost.setUser(user);
         petPost.setCreatedAt(postRequestDto.getCreatedAt());
         petPost.setType(postRequestDto.getType());
-
         postRepository.save(petPost);
+
+
         PostResponseDto postResponseDto = new PostResponseDto();
         postResponseDto=PostResponseDto.builder()
                 .id(postId)
@@ -161,5 +174,7 @@ public class PetPostService {
         PetPost petPost = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException("Post not found"));
         postRepository.delete(petPost);
     }
+
+
 
 }

@@ -29,12 +29,17 @@ dependencies {
     // Object Mapping
     implementation 'org.modelmapper:modelmapper:3.2.0'
 
+
+
     // Database Drivers
     implementation 'org.postgresql:postgresql:42.6.0'
     runtimeOnly 'com.h2database:h2'
+    implementation platform("software.amazon.awssdk:bom:2.20.60") // or latest
+    implementation "software.amazon.awssdk:s3"
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
 }
 
 tasks.named('test') {
