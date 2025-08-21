@@ -29,6 +29,8 @@ dependencies {
     // Object Mapping
     implementation 'org.modelmapper:modelmapper:3.2.0'
 
+//websocket
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
 
     // Database Drivers
@@ -39,6 +41,8 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+
 
 }
 
